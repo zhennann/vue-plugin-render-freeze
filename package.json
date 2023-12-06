@@ -1,0 +1,21 @@
+{
+  "name": "vue-plugin-render-freeze",
+  "version": "1.0.0",
+  "description": "vue-plugin-render-freeze",
+  "main": "./src/index.js",
+  "author": "zhennann",
+  "keywords": [
+    "vue",
+    "plugin",
+    "debug"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhennann/vue-plugin-render-freeze.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zhennann/vue-plugin-render-freeze/issues"
+  },
+  "homepage": "https://github.com/zhennann/vue-plugin-render-freeze#readme"
+}
