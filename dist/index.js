@@ -58,3 +58,4 @@ export const PluginFreeze = {
         });
     },
 };
+//# sourceMappingURL=index.js.map
