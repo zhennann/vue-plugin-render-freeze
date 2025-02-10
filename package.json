@@ -1,6 +1,6 @@
 {
   "name": "vue-plugin-render-freeze",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "vue-plugin-render-freeze",
   "type": "module",
   "exports": {
@@ -11,8 +11,7 @@
     "./*": "./*"
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "repository": {
     "type": "git",
