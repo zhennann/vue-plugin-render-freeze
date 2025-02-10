@@ -1,15 +1,19 @@
 {
   "name": "vue-plugin-render-freeze",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "vue-plugin-render-freeze",
-  "main": "./src/index.js",
-  "author": "zhennann",
-  "keywords": [
-    "vue",
-    "plugin",
-    "debug"
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./*": "./*"
+  },
+  "files": [
+    "dist",
+    "src"
   ],
-  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zhennann/vue-plugin-render-freeze.git"
@@ -17,5 +21,14 @@
   "bugs": {
     "url": "https://github.com/zhennann/vue-plugin-render-freeze/issues"
   },
-  "homepage": "https://github.com/zhennann/vue-plugin-render-freeze#readme"
+  "homepage": "https://github.com/zhennann/vue-plugin-render-freeze#readme",
+  "scripts": {
+    "lint": "eslint .",
+    "clean": "tsc -b --clean",
+    "tsc:publish": "npm run clean && tsc -b",
+    "prepublishOnly": "npm run tsc:publish"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.13"
+  }
 }

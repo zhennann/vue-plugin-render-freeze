@@ -9,23 +9,21 @@ npm install vue-plugin-render-freeze
 ## Usage
 
 ```js
-
-import VuePluginRenderFreeze from 'vue-plugin-render-freeze';
+import VuePluginRenderFreeze from "vue-plugin-render-freeze";
 
 // install
 Vue.use(VuePluginRenderFreeze);
-
 ```
 
 You can then use the vue component:
 
 ```js
-await this.renderFreezeBegin(async () => {
+await this.renderFreezeScope(async () => {
     ... long time operations
 });
 ```
 
-or 
+or
 
 ```js
 try {
