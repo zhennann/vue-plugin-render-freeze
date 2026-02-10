@@ -1,8 +1,9 @@
-import { App, ref } from "vue";
+import { App, ref, withCtx } from "vue";
 
 export type FunctionAsync<RESULT> = () => Promise<RESULT>;
 
 const SymbolRenderOriginal = Symbol("SymbolRenderOriginal");
+const SymbolRenderPatch = Symbol("SymbolRenderPatch");
 const SymbolRenderFreezeCounter = Symbol("SymbolRenderFreezeCounter");
 const SymbolRenderFreezeSnapshot = Symbol("SymbolRenderFreezeSnapshot");
 
@@ -16,14 +17,24 @@ export const PluginFreeze = {
         self[SymbolRenderFreezeCounter] = ref(0);
         self[SymbolRenderFreezeSnapshot] = undefined;
         self[SymbolRenderOriginal] = instance[renderMethod];
-        instance[renderMethod] = function (this, ...args) {
-          if (self[SymbolRenderFreezeCounter].value === 0) {
+        self[SymbolRenderPatch] = function (this, ...args) {
+          // @ts-ignore ignore
+          if (process.env.SERVER) {
+            return withCtx(() => {
+              return self[SymbolRenderOriginal].call(this, ...args);
+            }, instance)();
+          } else {
             return self[SymbolRenderOriginal].call(this, ...args);
           }
+        };
+        instance[renderMethod] = function (this, ...args) {
+          if (self[SymbolRenderFreezeCounter].value === 0) {
+            return self[SymbolRenderPatch].call(this, ...args);
+          }
           if (!self[SymbolRenderFreezeSnapshot]) {
-            self[SymbolRenderFreezeSnapshot] = self[SymbolRenderOriginal].call(
+            self[SymbolRenderFreezeSnapshot] = self[SymbolRenderPatch].call(
               this,
-              ...args
+              ...args,
             );
           }
           return self[SymbolRenderFreezeSnapshot];
@@ -51,7 +62,7 @@ export const PluginFreeze = {
           }
         },
         async renderFreezeScope<RESULT>(
-          fn: FunctionAsync<RESULT>
+          fn: FunctionAsync<RESULT>,
         ): Promise<RESULT> {
           const self = this;
           try {
